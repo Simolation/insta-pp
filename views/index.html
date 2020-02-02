@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Insta profile picture</title>
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="/assets/imageviewer.min.css" rel="stylesheet" />
+    <link href="/assets/main.css" rel="stylesheet" />
+
+    <!-- Google Tag Manager -->
+    <script>
+      if (
+        !(document.cookie.indexOf("OptOut=true") > -1) &&
+        !(location.hostname === "127.0.0.1")
+      ) {
+        (function(w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != "dataLayer" ? "&l=" + l : "";
+          j.async = true;
+          j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, "script", "dataLayer", "GTM-WCFW4SD");
+      }
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+  <body>
+    <div id="app" class="container mx-auto mt-4 p-6">
+      <h1 class="font-bold text-4xl mb-2 text-white">
+        Full size Instagram profile picture
+      </h1>
+      <h2 class="text-xl mb-2 text-gray-400">
+        Just enter the users profile name or the profile URL
+      </h2>
+      <form class="mt-6 neu" @submit.prevent="searchUser">
+        <div class="flex items-center">
+          <input
+            class="appearance-none bg-transparent border-none w-full text-white mr-3 focus:outline-none p-6"
+            type="text"
+            ref="profileInput"
+            required
+            autofocus
+            placeholder="Profile name or URL"
+            aria-label="Instagram profile"
+            v-model="profileInput"
+          />
+          <button
+            class="flex-shrink-0 text-sm text-white rounded p-6 focus:outline-none neu hover"
+            type="submit"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+      <div class="flex">
+        <transition name="fade" mode="out-in">
+          <div class="mx-auto mt-12" v-if="loading" key="loading">
+            <div class="spinner">
+              <div class="dot1"></div>
+              <div class="dot2"></div>
+            </div>
+            <span class="text-white"
+              >Searching '<span class="font-bold">{{ currentRequest }}</span>'
+              ...</span
+            >
+          </div>
+          <div class="mx-auto mt-6" v-if="error" key="error">
+            <p class="text-white">
+              '<span class="font-bold">{{ currentRequest }}</span>' could not be
+              laoded :/
+            </p>
+          </div>
+          <div class="mt-12 mx-auto inline-block" v-if="user" key="profile">
+            <div class="pb-4 profile">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h1 class="text-white text-2xl font-bold">
+                    {{ user.username }}
+                  </h1>
+                  <p class="text-gray-300 text-sm">{{ user.name }}</p>
+                </div>
+                <a
+                  :href="instaUrl"
+                  target="_blank"
+                  class="text-gray-100 flex text-sm"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-external-link"
+                  >
+                    <path
+                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                    ></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                  <span class="ml-1">Instagram</span>
+                </a>
+              </div>
+              <p class="text-gray-300 text-base mt-4">{{ user.bio }}</p>
+            </div>
+            <img
+              :src="user.profile_image_big"
+              @click="fullSize"
+              class="profile-image neu"
+            />
+            <p
+              class="text-white cursor-pointer text-center mt-4"
+              @click="download"
+              download
+            >
+              Download
+            </p>
+          </div>
+          <div
+            class="text-gray-300 p-6 mt-6"
+            v-if="!user && !error && !loading"
+            key="info"
+          >
+            You ever wanted to see the small Instagram profile picture in full
+            size? Then simply copy the profile URL or profile name into the
+            field above and press search. No matter if it's a public or private
+            profile, you will see it in full size. Just try it.
+            <br /><br />
+            This service is not affiliated with or endorsed by Instagram.
+          </div>
+        </transition>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous"
+    ></script>
+    <script src="/assets/imageviewer.min.js"></script>
+
+    <script src="/assets/app.js"></script>
+  </body>
+</html>
