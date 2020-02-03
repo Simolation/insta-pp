@@ -11,4 +11,4 @@ app.get("/", function(req, res) {
 });
 
 // Start the server on the given port
-server.listen(process.env.PORT || 8080);
+server.listen(process.env.PORT || 3002);

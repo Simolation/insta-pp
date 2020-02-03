@@ -2,12 +2,16 @@
   "name": "insta-pp",
   "version": "1.0.0",
   "description": "View Instagram profile pictures in full size",
-  "main": "index.js",
+  "main": "app.js",
   "repository": "https://github.com/Simolation/insta-pp.git",
   "author": "Simon Osterlehner <simon@osterlehner.de>",
   "license": "MIT",
   "private": false,
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "pm2 start app.js --name 'insta-pp'",
+    "restart": "pm2 restart insta-pp"
   }
 }
