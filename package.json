@@ -11,7 +11,7 @@
     "express": "^4.17.1"
   },
   "scripts": {
-    "start": "pm2 start app.js --name 'insta-pp'",
-    "restart": "pm2 restart insta-pp"
+    "start": "PORT=3002 pm2 start app.js --name 'insta-pp'",
+    "restart": "pm2 reload insta-pp"
   }
 }
