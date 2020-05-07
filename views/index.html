@@ -116,7 +116,7 @@
                   <h1 class="text-white text-2xl font-bold">
                     {{ user.username }}
                   </h1>
-                  <p class="text-gray-300 text-sm">{{ user.name }}</p>
+                  <p class="text-gray-300 text-sm">{{ user.full_name }}</p>
                 </div>
                 <a
                   :href="instaUrl"
@@ -147,7 +147,7 @@
               <p class="text-gray-300 text-base mt-4">{{ user.bio }}</p>
             </div>
             <img
-              :src="user.profile_image_big"
+              :src="user.profile_pictures.hd"
               @click="fullSize"
               class="profile-image neu"
             />

@@ -28,15 +28,12 @@ var app = new Vue({
 
       axios
         .get(
-          "https://api.simolation.com/infos/instagram/users/" +
-            profileName +
-            "?noStatusCode"
+          "/insta/" + profileName
         )
         .then(response => {
           this.loading = false;
           const body = response.data;
-          if (body.status == "ok") {
-            body.data.username = profileName;
+          if (body.status == "success") {
             this.user = body.data;
           } else {
             this.error = true;
@@ -64,11 +61,11 @@ var app = new Vue({
     fullSize: function() {
       if (this.user) {
         var viewer = ImageViewer();
-        viewer.show(this.user.profile_image_big);
+        viewer.show(this.user.profile_pictures.hd);
       }
     },
     download: function() {
-      fetch(this.user.profile_image_big)
+      fetch(this.user.profile_pictures.hd)
         .then(resp => resp.blob())
         .then(blob => {
           const url = window.URL.createObjectURL(blob);
