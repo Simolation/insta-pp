@@ -58,7 +58,7 @@ var app = new Vue({
         return result[1];
       }
     },
-    formatNumber: function (number) {
+    formatNumber: function (labelValue) {
       // Nine Zeroes for Billions
       return Math.abs(Number(labelValue)) >= 1.0e+9
 
