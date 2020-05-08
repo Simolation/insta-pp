@@ -99,10 +99,10 @@
             </p>
           </div>
           <div class="mt-12 mx-auto inline-block" v-if="user" key="profile">
-            <div class="flex-shrink-0 group block focus:outline-none">
+            <div class="group block focus:outline-none">
               <div class="flex items-center">
-                <div>
-                  <img class="inline-block h-32 w-32 rounded-full shadow-lg cursor-zoom" :src="user.profile_pictures.normal" @click="fullSize" />
+                <div class="flex-shrink-0">
+                  <img class="inline-block h-20 w-20 sm:h-32 sm:w-32 rounded-full shadow-lg cursor-zoom" :src="user.profile_pictures.normal" @click="fullSize" />
                 </div>
                 <div class="ml-8">
                   <p class="text-3xl leading-5 font-bold text-gray-800">
@@ -122,7 +122,7 @@
                 <div class="px-4 py-2 sm:p-6 text-center">
                   <dl>
                     <dd class="mt-1 text-2xl leading-9 font-bold text-gray-900">
-                      {{ user.statistics.media }}
+                      {{ formatNumber(user.statistics.media) }}
                     </dd>
                     <dt class="text-sm leading-5 font-medium text-gray-500 truncate sm:mt-2">
                       Posts
@@ -134,7 +134,7 @@
                 <div class="px-4 py-2 sm:p-6 text-center">
                   <dl>
                     <dd class="mt-1 text-2xl leading-9 font-bold text-gray-900">
-                      {{ user.statistics.follower }}
+                      {{ formatNumber(user.statistics.follower) }}
                     </dd>
                     <dt class="text-sm leading-5 font-medium text-gray-500 truncate sm:mt-2">
                       Followers
@@ -146,7 +146,7 @@
                 <div class="px-4 py-2 sm:p-6 text-center">
                   <dl>
                     <dd class="mt-1 text-2xl leading-9 font-bold text-gray-900">
-                      {{ user.statistics.following }}
+                      {{ formatNumber(user.statistics.following) }}
                     </dd>
                     <dt class="text-sm leading-5 font-medium text-gray-500 truncate sm:mt-2">
                       Following
