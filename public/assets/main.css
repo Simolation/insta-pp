@@ -1,41 +1,20 @@
 body {
-  background-color: #8a3ab9;
   font-family: 'Montserrat', sans-serif;
+}
+
+.sized-box {
+  max-width: 640px;
 }
 
 .iv-snap-image {
   max-width: inherit !important;
 }
 
-.neu {
-  border-radius: 16px;
-  background: #8a3ab9;
-  box-shadow: 30px 30px 60px #75319d,
-    -30px -30px 60px #9f43d5;
-}
-
-.neu .hover:hover {
-  background: #8037aa;
-}
-
-.profile {
-  max-width: 500px;
-}
-
-.profile-image {
-  max-width: 500px;
-  width: 100%;
-  height: auto;
+.cursor-zoom {
   cursor: -moz-zoom-in;
   cursor: -webkit-zoom-in;
   cursor: zoom-in;
   transition: transform .2s;
-}
-
-.profile-image:hover {
-  -ms-transform: scale(1.01);
-  -webkit-transform: scale(1.01);
-  transform: scale(1.01);
 }
 
 .spinner {
@@ -56,7 +35,7 @@ body {
   display: inline-block;
   position: absolute;
   top: 0;
-  background-color: #fff;
+  background-color: #718096;
   border-radius: 100%;
 
   -webkit-animation: sk-bounce 2.0s infinite ease-in-out;

@@ -12,7 +12,7 @@
     />
 
     <link
-      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      href="https://unpkg.com/tailwindcss@1.4.5/dist/tailwind.min.css"
       rel="stylesheet"
     />
     <link href="/assets/imageviewer.min.css" rel="stylesheet" />
@@ -38,7 +38,7 @@
     </script>
     <!-- End Google Tag Manager -->
   </head>
-  <body>
+  <body class="bg-gray-100">
     <a
       href="https://github.com/Simolation/insta-pp"
       class="github-corner"
@@ -64,32 +64,21 @@
         ></path>
       </svg>
     </a>
-    <div id="app" class="container mx-auto mt-4 p-6">
-      <h1 class="font-bold text-4xl mb-2 text-white">
-        Full size Instagram profile picture
+    <div id="app" class="sized-box mx-auto mt-4 p-6">
+      <h1 class="font-bold text-2xl mb-2 text-gray-900">
+        Full size profile picture
       </h1>
-      <h2 class="text-xl mb-2 text-gray-400">
+      <h2 class="text-md mb-2 text-gray-800">
         Just enter the users profile name or the profile URL
       </h2>
-      <form class="mt-6 neu" @submit.prevent="searchUser">
-        <div class="flex items-center">
-          <input
-            class="appearance-none bg-transparent border-none w-full text-white mr-3 focus:outline-none p-6"
-            type="text"
-            ref="profileInput"
-            required
-            autofocus
-            placeholder="Profile name or URL"
-            aria-label="Instagram profile"
-            v-model="profileInput"
-          />
-          <button
-            class="flex-shrink-0 text-sm text-white rounded p-6 focus:outline-none neu hover"
+      <form class="mt-6 flex" @submit.prevent="searchUser">
+        <input type="text" v-model="profileInput" class="form-input block w-full sm:text-sm sm:leading-5 p-4 shadow-lg rounded-md bg-white" required autofocus placeholder="Profile name or URL" />
+        <button
+            class="flex-shrink-0 text-sm text-gray-800 shadow-lg ml-2 rounded-md bg-white hover:bg-gray-200 p-2 focus:outline-none"
             type="submit"
           >
             Search
           </button>
-        </div>
       </form>
       <div class="flex">
         <transition name="fade" mode="out-in">
@@ -98,61 +87,77 @@
               <div class="dot1"></div>
               <div class="dot2"></div>
             </div>
-            <span class="text-white"
+            <span class="text-gray-600"
               >Searching '<span class="font-bold">{{ currentRequest }}</span>'
               ...</span
             >
           </div>
           <div class="mx-auto mt-6" v-if="error" key="error">
-            <p class="text-white">
+            <p class="text-red-600">
               '<span class="font-bold">{{ currentRequest }}</span>' could not be
               laoded :/
             </p>
           </div>
           <div class="mt-12 mx-auto inline-block" v-if="user" key="profile">
-            <div class="pb-4 profile">
-              <div class="flex justify-between items-center">
+            <div class="flex-shrink-0 group block focus:outline-none">
+              <div class="flex items-center">
                 <div>
-                  <h1 class="text-white text-2xl font-bold">
-                    {{ user.username }}
-                  </h1>
-                  <p class="text-gray-300 text-sm">{{ user.full_name }}</p>
+                  <img class="inline-block h-32 w-32 rounded-full shadow-lg cursor-zoom" :src="user.profile_pictures.normal" @click="fullSize" />
                 </div>
-                <a
-                  :href="instaUrl"
-                  target="_blank"
-                  class="text-gray-100 flex text-sm"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="feather feather-external-link"
-                  >
-                    <path
-                      d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
-                    ></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                  <span class="ml-1">Instagram</span>
-                </a>
+                <div class="ml-8">
+                  <p class="text-3xl leading-5 font-bold text-gray-800">
+                    {{ user.username }}
+                  </p>
+                  <p class="text-md leading-4 font-medium text-gray-600 mt-4">
+                    {{ user.full_name }}
+                  </p>
+                  <p class="text-md leading-4 font-medium text-gray-500 mt-4">
+                    {{ user.bio }}
+                  </p>
+                </div>
               </div>
-              <p class="text-gray-300 text-base mt-4">{{ user.bio }}</p>
             </div>
-            <img
-              :src="user.profile_pictures.hd"
-              @click="fullSize"
-              class="profile-image neu"
-            />
+            <div class="mt-8 grid grid-cols-3 border-b-2 border-t-2 border-gray-200">
+              <div class="overflow-hidden rounded-lg">
+                <div class="px-4 py-2 sm:p-6 text-center">
+                  <dl>
+                    <dd class="mt-1 text-2xl leading-9 font-bold text-gray-900">
+                      {{ user.statistics.media }}
+                    </dd>
+                    <dt class="text-sm leading-5 font-medium text-gray-500 truncate sm:mt-2">
+                      Posts
+                    </dt>
+                  </dl>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-lg">
+                <div class="px-4 py-2 sm:p-6 text-center">
+                  <dl>
+                    <dd class="mt-1 text-2xl leading-9 font-bold text-gray-900">
+                      {{ user.statistics.follower }}
+                    </dd>
+                    <dt class="text-sm leading-5 font-medium text-gray-500 truncate sm:mt-2">
+                      Followers
+                    </dt>
+                  </dl>
+                </div>
+              </div>
+              <div class="overflow-hidden rounded-lg">
+                <div class="px-4 py-2 sm:p-6 text-center">
+                  <dl>
+                    <dd class="mt-1 text-2xl leading-9 font-bold text-gray-900">
+                      {{ user.statistics.following }}
+                    </dd>
+                    <dt class="text-sm leading-5 font-medium text-gray-500 truncate sm:mt-2">
+                      Following
+                    </dt>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <img class="inline-block rounded-md shadow-lg cursor-zoom mt-8" :src="user.profile_pictures.hd" @click="fullSize" />
             <p
-              class="text-white cursor-pointer text-center mt-4"
+              class="text-gray-700 cursor-pointer text-center mt-4"
               @click="download"
               download
             >
@@ -160,7 +165,7 @@
             </p>
           </div>
           <div
-            class="text-gray-300 p-6 mt-6"
+            class="text-gray-500 p-6 mt-6"
             v-if="!user && !error && !loading"
             key="info"
           >
