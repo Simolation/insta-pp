@@ -1,6 +1,6 @@
 # Instagram Profile Picture
 
-Get an Instagram profile picture in full size
+Get an Instagram profile picture in full size. This project is live at [insta.simons.world](https://insta.simons.world/)
 
 ## How to install
 
@@ -18,4 +18,4 @@ IG_PASSWORD=YourPassword
 ```
 
 5. To run this app in "production" I am using [pm2](https://pm2.keymetrics.io/) and can be started with `yarn start` where it will be available under port 3002. The URL would then be http://localhost:3002/.  
-   To just run it locally on your computer you can use ts-node to execute this TypeScript application. Just run `ts-node app.ts`
+   To just run it locally on your computer you can use ts-node to execute this TypeScript application. Just run `ts-node app.ts`. The server will start on port 8080 and thus will be available at http://localhost:8080/.
