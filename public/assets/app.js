@@ -5,15 +5,15 @@ var app = new Vue({
     currentRequest: "",
     user: false,
     error: false,
-    loading: false
+    loading: false,
   },
   computed: {
-    instaUrl: function() {
+    instaUrl: function () {
       return "https://www.instagram.com/" + this.user.username + "/";
-    }
+    },
   },
   methods: {
-    searchUser: function() {
+    searchUser: function () {
       var profileName = this.getInstaName(this.profileInput.trim());
       if (profileName == "") {
         this.profileInput = "";
@@ -27,10 +27,8 @@ var app = new Vue({
       this.error = false;
 
       axios
-        .get(
-          "/insta/" + profileName
-        )
-        .then(response => {
+        .get("/insta/" + profileName)
+        .then((response) => {
           this.loading = false;
           const body = response.data;
           if (body.status == "success") {
@@ -39,7 +37,7 @@ var app = new Vue({
             this.error = true;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           this.loading = false;
           this.error = true;
           console.log(error.response);
@@ -48,7 +46,7 @@ var app = new Vue({
       // empty the input field
       this.profileInput = "";
     },
-    getInstaName: function(text) {
+    getInstaName: function (text) {
       var result = text.match(
         /(?:(?:http|https):\/\/)?(?:www.)?(?:instagram.com|instagr.am)\/([A-Za-z0-9-_\.]+)/
       );
@@ -60,30 +58,26 @@ var app = new Vue({
     },
     formatNumber: function (labelValue) {
       // Nine Zeroes for Billions
-      return Math.abs(Number(labelValue)) >= 1.0e+9
-
-      ? Math.abs(Number(labelValue)) / 1.0e+9 + "b"
-      // Six Zeroes for Millions 
-      : Math.abs(Number(labelValue)) >= 1.0e+6
-
-      ? Math.abs(Number(labelValue)) / 1.0e+6 + "m"
-      // Three Zeroes for Thousands
-      : Math.abs(Number(labelValue)) >= 1.0e+3
-
-      ? Math.abs(Number(labelValue)) / 1.0e+3 + "k"
-
-      : Math.abs(Number(labelValue));
+      return Math.abs(Number(labelValue)) >= 1.0e9
+        ? Math.round((Math.abs(Number(labelValue)) / 1.0e9) * 10) / 10 + "b"
+        : // Six Zeroes for Millions
+        Math.abs(Number(labelValue)) >= 1.0e6
+        ? Math.round((Math.abs(Number(labelValue)) / 1.0e6) * 10) / 10 + "m"
+        : // Three Zeroes for Thousands
+        Math.abs(Number(labelValue)) >= 1.0e3
+        ? Math.round((Math.abs(Number(labelValue)) / 1.0e3) * 10) / 10 + "k"
+        : Math.abs(Number(labelValue));
     },
-    fullSize: function() {
+    fullSize: function () {
       if (this.user) {
         var viewer = ImageViewer();
         viewer.show(this.user.profile_pictures.hd);
       }
     },
-    download: function() {
+    download: function () {
       fetch(this.user.profile_pictures.hd)
-        .then(resp => resp.blob())
-        .then(blob => {
+        .then((resp) => resp.blob())
+        .then((blob) => {
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.style.display = "none";
@@ -94,6 +88,6 @@ var app = new Vue({
           window.URL.revokeObjectURL(url);
         })
         .catch(() => alert("Failed to download image!"));
-    }
-  }
+    },
+  },
 });

@@ -1,24 +1,23 @@
-require('dotenv').config()
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
 const server = require("http").createServer(app);
 
 // load instagram stuff
-import { IgApiClient } from 'instagram-private-api';
+import { IgApiClient } from "instagram-private-api";
 const ig = new IgApiClient();
 
 // Serve static pages
 app.use(express.static(__dirname + "/public"));
 
 // Generate a new bucket and open the page
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-// load instagram data
 // load instagram user data
-app.get("/insta/:id", async function(req, res) {
+app.get("/insta/:id", async function (req, res) {
   try {
     const userID = await ig.user.getIdByUsername(req.params.id);
 
@@ -35,19 +34,18 @@ app.get("/insta/:id", async function(req, res) {
       business: info.is_business,
       profile_pictures: {
         normal: info.profile_pic_url,
-        hd: info.hd_profile_pic_url_info.url
+        hd: info.hd_profile_pic_url_info.url,
       },
       statistics: {
         media: info.media_count,
         follower: info.follower_count,
-        following: info.following_count
-      }
-    }
+        following: info.following_count,
+      },
+    };
 
-    res.json({status: 'success', data: result})
-    
+    res.json({ status: "success", data: result });
   } catch (err) {
-    res.status(404).json({status: 'error', trace: err })
+    res.status(404).json({ status: "error", trace: err });
   }
 });
 
@@ -60,5 +58,5 @@ ig.state.generateDevice(process.env.IG_USERNAME);
 
   // Start the server on the given port
   server.listen(process.env.PORT || 8080);
-  console.log('Insta API ready!')
+  console.log("Insta API ready!");
 })();
