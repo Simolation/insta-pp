@@ -16,8 +16,8 @@
     "typescript": "^4.3.2"
   },
   "scripts": {
-    "start": "PORT=3002 pm2 start app.ts --name 'insta-pp' -i max",
-    "restart": "pm2 reload insta-pp"
+    "start": "tsc & PORT=3002 pm2 start app.js --name 'insta-pp' -i max",
+    "restart": "tsc & pm2 reload insta-pp"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.0.1",
