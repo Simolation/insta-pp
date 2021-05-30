@@ -12,6 +12,13 @@ var app = new Vue({
       return "https://www.instagram.com/" + this.user.username + "/";
     },
   },
+  mounted: function () {
+    // remove css class which hides the page content as long as vue is not initialized yet
+    document.body.className = document.body.className.replace(
+      "insta-hidden",
+      ""
+    );
+  },
   methods: {
     searchUser: function () {
       var profileName = this.getInstaName(this.profileInput.trim());
@@ -27,19 +34,23 @@ var app = new Vue({
       this.error = false;
 
       axios
-        .get("/insta/" + profileName)
+        .get("/api/profile/" + profileName)
         .then((response) => {
           this.loading = false;
           const body = response.data;
           if (body.status == "success") {
             this.user = body.data;
           } else {
-            this.error = true;
+            this.error = `An error occurred, please try again later :/`;
           }
         })
         .catch((error) => {
           this.loading = false;
-          this.error = true;
+          if (error.response.status == 404) {
+            this.error = `Account '${this.currentRequest}' does not exist!`;
+          } else {
+            this.error = `An error occurred, please try again later :/`;
+          }
           console.log(error.response);
         });
 

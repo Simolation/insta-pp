@@ -22,7 +22,7 @@
     <script>
       if (
         !(document.cookie.indexOf("OptOut=true") > -1) &&
-        !(location.hostname === "127.0.0.1")
+        location.hostname == "insta.simons.world"
       ) {
         (function (w, d, s, l, i) {
           w[l] = w[l] || [];
@@ -37,8 +37,16 @@
       }
     </script>
     <!-- End Google Tag Manager -->
+    <style>
+      .insta-hidden {
+        opacity: 0;
+      }
+      body {
+        transition: opacity 0.5s;
+      }
+    </style>
   </head>
-  <body class="bg-gray-100">
+  <body class="bg-gray-100 insta-hidden">
     <a
       href="https://github.com/Simolation/insta-pp"
       class="github-corner"
@@ -82,13 +90,33 @@
         <input
           type="text"
           v-model="profileInput"
-          class="form-input block w-full sm:text-sm sm:leading-5 p-4 shadow-lg rounded-md bg-white"
+          class="
+            form-input
+            block
+            w-full
+            sm:text-sm
+            sm:leading-5
+            p-4
+            shadow-lg
+            rounded-md
+            bg-white
+          "
           required
           autofocus
           placeholder="Profile name or URL"
         />
         <button
-          class="flex-shrink-0 text-sm text-gray-800 shadow-lg ml-2 rounded-md bg-white hover:bg-gray-200 p-2 focus:outline-none"
+          class="
+            flex-shrink-0
+            text-sm text-gray-800
+            shadow-lg
+            ml-2
+            rounded-md
+            bg-white
+            hover:bg-gray-200
+            p-2
+            focus:outline-none
+          "
           type="submit"
         >
           Search
@@ -107,17 +135,23 @@
             >
           </div>
           <div class="mx-auto mt-6" v-if="error" key="error">
-            <p class="text-red-600">
-              '<span class="font-bold">{{ currentRequest }}</span>' could not be
-              laoded :/
-            </p>
+            <p class="text-red-600">{{ error }}</p>
           </div>
           <div class="mt-12 mx-auto inline-block" v-if="user" key="profile">
             <div class="group block focus:outline-none">
               <div class="flex items-center">
                 <div class="flex-shrink-0">
                   <img
-                    class="inline-block h-20 w-20 sm:h-32 sm:w-32 rounded-full shadow-lg cursor-zoom"
+                    class="
+                      inline-block
+                      h-20
+                      w-20
+                      sm:h-32
+                      sm:w-32
+                      rounded-full
+                      shadow-lg
+                      cursor-zoom
+                    "
                     :src="user.profile_pictures.normal"
                     @click="fullSize"
                   />
@@ -136,7 +170,11 @@
               </div>
             </div>
             <div
-              class="mt-8 grid grid-cols-3 border-b-2 border-t-2 border-gray-200"
+              class="
+                mt-8
+                grid grid-cols-3
+                border-b-2 border-t-2 border-gray-200
+              "
             >
               <div class="overflow-hidden rounded-lg">
                 <div class="px-4 py-2 sm:p-6 text-center">
@@ -145,7 +183,14 @@
                       {{ formatNumber(user.statistics.media) }}
                     </dd>
                     <dt
-                      class="text-sm leading-5 font-medium text-gray-500 truncate sm:mt-2"
+                      class="
+                        text-sm
+                        leading-5
+                        font-medium
+                        text-gray-500
+                        truncate
+                        sm:mt-2
+                      "
                     >
                       Posts
                     </dt>
@@ -159,7 +204,14 @@
                       {{ formatNumber(user.statistics.follower) }}
                     </dd>
                     <dt
-                      class="text-sm leading-5 font-medium text-gray-500 truncate sm:mt-2"
+                      class="
+                        text-sm
+                        leading-5
+                        font-medium
+                        text-gray-500
+                        truncate
+                        sm:mt-2
+                      "
                     >
                       Followers
                     </dt>
@@ -173,7 +225,14 @@
                       {{ formatNumber(user.statistics.following) }}
                     </dd>
                     <dt
-                      class="text-sm leading-5 font-medium text-gray-500 truncate sm:mt-2"
+                      class="
+                        text-sm
+                        leading-5
+                        font-medium
+                        text-gray-500
+                        truncate
+                        sm:mt-2
+                      "
                     >
                       Following
                     </dt>
