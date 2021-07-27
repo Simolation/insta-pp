@@ -86,6 +86,7 @@ app.get("/api/image", async function (req, res) {
 // set up instagram session
 ig.state.generateDevice(process.env.IG_USERNAME);
 (async () => {
+  console.log("Starting insta API");
   await ig.simulate.preLoginFlow();
   await ig.account.login(process.env.IG_USERNAME, process.env.IG_PASSWORD);
   process.nextTick(async () => await ig.simulate.postLoginFlow());
